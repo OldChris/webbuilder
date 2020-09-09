@@ -1,0 +1,13 @@
+oude_maas,Picture of river Oude Maas near Spijkenisse,images/OudeMaas.jpg
+spijkenisse_brug_1,,images/SpijkenisseBrug_1.jpg
+spijkenisse_brug_2,,images/SpijkenisseBrug_2.jpg
+spijkenisse_brug_3,,images/SpijkenisseBrug_3.jpg
+spijkenisse_brug_4,,images/SpijkenisseBrug_4.jpg
+spijkenisse_brug_sluit,,images/SpijkenisseBrug_Sluit_1.mp4
+botlekbrug_1,Een foto van de Botlek brug,images/BotlekBrug_1.jpg
+botlekbrug_2,Een foto van de Botlek brug,images/BotlekBrug_2.jpg
+ccbotlekbrug_3,Een foto van de Botlek brug,images/BotlekBrug_3.jpg
+botlekbrug_fietspad,Een foto van het fietspad over de Botlek brug,images/BotlekBrug_fietspad_1.jpg
+botlekbrug_open,Een foto van de Botlek brug,images/BotlekBrug_open.jpg
+hartelbrug_fietspad_1,Een foto van het fietspad over de Hartel brug,images/HartelBrug_fietspad_1.jpg
+hartelbrug_fietspad_2,Een foto van het fietspad over de Hartel brug,images/HartelBrug_fietspad_2.jpg
