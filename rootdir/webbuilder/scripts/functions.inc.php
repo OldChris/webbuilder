@@ -22,7 +22,7 @@ global $menuitems;
 
 $blnPassThrough=false;
 //
-function read_defaults()
+function readDefaults()
 {
 	include constant('SCRIPTSDIR') . "/appinfo.inc.php";
 
@@ -32,33 +32,30 @@ function read_defaults()
 	$Def_App_Tagline="Undefined tagline";
 	$Def_App_Icon="favicon.png";
 	$Def_App_Logo="default_logo.png";
-	$Def_App_Version="Undefined version";
 	$Def_App_Copyright="Undefined copyright message";
-	$Def_App_Contact="Undefined Contact details";
-	$Def_App_Disclaimer="Undefined disclaimer text";
 	$Def_App_Description="Undefined description of website";
 	$Def_App_Keywords="Undefined website keywords";
 	$Def_App_Home="Home";
 	$Def_App_Bootstrap_local=true;
+	$Def_App_BGColorNavbarTop="#e3f2fd";
+	$Def_App_BGColorNavbarBottom="#e3f2fd";
 
 	//
 	$App_Name="";
 	$App_Tagline="";
 	$App_Icon="";
 	$App_Logo="";
-	$App_Version="";
 	$App_Copyright="";
-	$App_Contact="";
-	$App_Disclaimer="";
 	$App_Description="";
 	$App_Keywords="";
 	$App_Home="";
 	$App_Bootstrap_local="";
+	$App_BGColorNavbarTop="";
+	$App_BGColorNavbarBottom="";
 	// 
 	$DefaultErrors="";
 	// locate file
-	$App_DataDir=constant('ROOTDIR');
-	$directory=$App_DataDir;
+	$directory=constant('ROOTDIR');
 	$filename=$directory . "/_defaults.txt";
 	if (is_dir($directory))
 	{
@@ -74,7 +71,7 @@ function read_defaults()
 				{
 					$keyword=substr($lines[$i],0,strpos($lines[$i],"="));
 					$value=substr($lines[$i],strpos($lines[$i],"=")+1);
-					$value=remove_cr($value);
+					$value=removeCr($value);
 				//	echo nl2br("keyword = " . $keyword . ", value = " . $value . "\n");
 					switch (strtoupper($keyword))
 					{
@@ -90,17 +87,8 @@ function read_defaults()
 						case "APP_LOGO" :
 							$App_Logo=$value;
 							break;
-						case "APP_VERSION" :
-							$App_Version=$value;
-							break;
 						case "APP_COPYRIGHT" :
 							$App_Copyright=$value;
-							break;
-						case "APP_CONTACT" :
-							$App_Contact=$value;
-							break;
-						case "APP_DISCLAIMER" :
-							$App_Disclaimer=$value;
 							break;
 						case "APP_DESCRIPTION" :
 							$App_Description=$value;
@@ -122,6 +110,14 @@ function read_defaults()
 							}
 							$App_Bootstrap_local=$value;
 							break;
+						case "APP_BGCOLORNAVBARTOP" :
+							$App_BGColorNavbarTop=$value;
+							break;
+						case "APP_BGCOLORNAVBARBOTTOM" :
+							$App_BGColorNavbarBottom=$value;
+							break;
+
+
 					}
 				} 
 			}
@@ -146,25 +142,10 @@ function read_defaults()
 				$App_Logo=$Def_App_Logo;
 				$DefaultErrors.='no value present for App_Logo in ' . $filename . ', ';
 			}
-			if ($App_Version=="")
-			{
-				$App_Version=$Def_App_Version;
-				$DefaultErrors.='no value present for App_Version in ' . $filename . ', ';
-			}
 			if ($App_Copyright=="")
 			{
 				$App_Copyright=$Def_App_Copyright;
 				$DefaultErrors.='no value present for App_Copyright in ' . $filename . ', ';
-			}
-			if ($App_Contact=="")
-			{
-				$App_Contact=$Def_App_Contact;
-				$DefaultErrors.='no value present for App_Contact in ' . $filename . ', ';
-			}
-			if ($App_Disclaimer=="")
-			{
-				$App_Disclaimer=$Def_App_Disclaimer;
-				$DefaultErrors.='no value present for App_Disclaimer in ' . $filename . ', ';
 			}
 			if ($App_Description=="")
 			{
@@ -185,27 +166,35 @@ function read_defaults()
 			{
 				$App_Bootstrap_local=$Def_App_Bootstrap_local;
 				$DefaultErrors.='no value present for App_Bootstrap_local in ' . $filename . ', ';
-
 			}
-
+			if ($App_BGColorNavbarTop=="")
+			{
+				$App_BGColorNavbarTop=$Def_App_BGColorNavbarTop;
+				$DefaultErrors.='no value present for App_BGColorNavbarTop in ' . $filename . ', ';
+			}
+			if ($App_BGColorNavbarBottom=="")
+			{
+				$App_BGColorNavbarBottom=$Def_App_BGColorNavbarBottom;
+				$DefaultErrors.='no value present for App_BGColorNavbarBottom in ' . $filename . ', ';
+			}
 		} else
 		{
-			echo nl2br("\n". constant('SCRIPT_TITLE') . " Fatal error: file with default values not found! (" . $filename . ")\n");
-			echo nl2br("\n\nscript died....\n\n");
-			show_footer();
+			echo formatErrorMessage(constant('SCRIPT_TITLE') . ' Fatal error: file with default values not found! (' . $filename . ')');
+			echo formatErrorMessage('script died....');
+			showFooter();
 			die;
 		}
 	} else
 	{
-		echo nl2br("\n". constant('SCRIPT_TITLE') . " Fatal error: directory with data files not found! (" . $directory . ")\n");
-		echo nl2br("\n\nscript died....\n\n");
-		show_footer();
+		echo formatErrorMessage(constant('SCRIPT_TITLE') . ' Fatal error: directory with data files not found! (' . $directory . ')');
+		echo formatErrorMessage('script died....');
+		showFooter();
 		die;
 	}
 	 //echo nl2br("Globals: \n");
 	// var_dump($GLOBALS);
 }
-function inline_function($functionname, $argument="")
+function inlineFunction($functionname, $argument="")
 {
 	//echo 'function name= ' . $functionname . ', arguments= ' . $argument . PHP_EOL;
 	$param_arr=[$argument];
@@ -218,11 +207,10 @@ function inline_function($functionname, $argument="")
 	}
 	else
 	{
-		echo format_error_message('Inline-function "' . $functionname . '" not found');		
-		die;
+		echo formatErrorMessage('Inline-function "' . $functionname . '" not found');	
 	}
 }
-function the_inline_test_function()
+function theInlineTestFunction()
 {
      echo 'hello from the inline test function';
      echo 'hello from the inline test function';
@@ -238,7 +226,7 @@ function the_inline_test_function()
 //
 
 
-function show_menu($menu_level1,$menu_level2="")
+function showMenu($menu_level1,$menu_level2="")
 {
 	include(constant('SCRIPTSDIR') . "/appinfo.inc.php");
 	global $menucontext_level1;
@@ -251,9 +239,9 @@ function show_menu($menu_level1,$menu_level2="")
 		$menucontext_level1=$App_Home;
 	}
 	// Now build the menu bar
-	echo '<nav class="navbar navbar-expand-md navbar-light" style="background-color: #e3f2fd;">' . PHP_EOL;
+	echo '<nav class="navbar navbar-expand-md navbar-light" style="background-color:' . $App_BGColorNavbarTop . ';">' . PHP_EOL;
     echo '  <a class="navbar-brand" href="index.php">' . PHP_EOL;
-	echo '    <img src="'. $App_DataDir . '/images/' . $App_Logo . '" height="50" loading="lazy">' .PHP_EOL;
+	echo '    <img src="'. constant('ROOTDIR') . '/images/' . $App_Logo . '" height="50" loading="lazy">' .PHP_EOL;
 	echo '  </a>' . PHP_EOL;
  	//
  	echo '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar" aria-controls="myNavbar" aria-expanded="false" aria-label="Toggle navigation">' .PHP_EOL;
@@ -264,16 +252,16 @@ function show_menu($menu_level1,$menu_level2="")
 	echo '<ul class="navbar-nav  mr-auto">' . PHP_EOL;
 //
 	$menuitems[]="";
-	$menuitems=get_file_list();
+	$menuitems=getFileList();
   //  var_dump($menuitems);
-	$level1_list=get_level1_list();
+	$level1_list=getLevel1List();
 	//var_dump($level1_list);
 	foreach ($level1_list as $level1_menuitem)
 	{
 	//	echo $level1_menuitem . PHP_EOL;
 	//	echo $menucontext_level1 . PHP_EOL;
 		if ($level1_menuitem == $menucontext_level1) $isActive=true; else $isActive=false;
-		$level2_list=get_level2_list($level1_menuitem);
+		$level2_list=getLevel2List($level1_menuitem);
 		//var_dump($level2_list);
         if (count($level2_list) > 0) $hasDropdown=true; else $hasDropdown=false;
  		if ($hasDropdown) $dropdown=' dropdown'; else $dropdown='';
@@ -330,11 +318,11 @@ function show_menu($menu_level1,$menu_level2="")
 
 
 
-function show_search($search_text)
+function showSearch($search_text)
 {
-	start_page();
+	startPage();
 	echo '<h2>Search results for : "' . $search_text . '"</h2>' . PHP_EOL;
-	$result = search_site($search_text);
+	$result = searchSite($search_text);
 	if ($result !== false)
 	{
 		echo $result;
@@ -343,9 +331,9 @@ function show_search($search_text)
 	{
 		echo '<p class="text-danger">sorry nothing found for : "' . $search_text . '"</p>' . PHP_EOL;
 	}
-	end_page();
+	endPage();
 }
-function get_level1_from_level1_file()
+function getLevel1FromLevel1File()
 {
 	$level1_list=array();
 	$filename=constant('ROOTDIR') . "/_menu_order.txt";
@@ -365,10 +353,10 @@ function get_level1_from_level1_file()
 	return false;
 }
 
-function get_level1_list()
+function getLevel1List()
 {
 	$level1_list=array();
-	$level1_list=get_level1_from_level1_file();
+	$level1_list=getLevel1FromLevel1File();
 	if ($level1_list == false)
 	{
 		global $menuitems;
@@ -387,7 +375,7 @@ function get_level1_list()
 	return $level1_list; 
 }
 
-function get_level2_list($level1_menu)
+function getLevel2List($level1_menu)
 {
 	$level2_list=array();
 	global $menuitems;
@@ -405,7 +393,7 @@ function get_level2_list($level1_menu)
 	return $level2_list; 
 }
 
-function get_level3_list($level1_menu, $level2_menu)
+function getLevel3List($level1_menu, $level2_menu)
 {
 	$level3_list=array();
 	global $menuitems;
@@ -423,16 +411,16 @@ function get_level3_list($level1_menu, $level2_menu)
 	return $level3_list; 
 }
 	
-function show_page($level1_menu, $level2_menu=Null, $level3_menu=Null)
+function showPage($level1_menu, $level2_menu=Null, $level3_menu=Null)
 {
-	start_page();
-	breadcrumbsBS($level1_menu, $level2_menu, $level3_menu);
+	startPage();
+	breadCrumbsBS($level1_menu, $level2_menu, $level3_menu);
 	//
 	// now check if level 3 menu items are available...
 	$level3_list="";
 	if ($level2_menu != "")
 	{
-		$level3_list=get_level3_list($level1_menu, $level2_menu);
+		$level3_list=getLevel3List($level1_menu, $level2_menu);
 		$list_count=count($level3_list);
 		if ($list_count > 0)
 		{
@@ -460,25 +448,25 @@ function show_page($level1_menu, $level2_menu=Null, $level3_menu=Null)
 	//
 	if ($level1_menu != "") 
 	{
-		readfilexx(constant('ROOTDIR') . "/" . "1_" . $level1_menu . ".txt");
+		processUserFile(constant('ROOTDIR') . "/" . "1_" . $level1_menu . ".txt");
 	}
 	if ($level2_menu != "") 
 	{
-		readfilexx(constant('ROOTDIR') . "/" . "2_" . $level1_menu . "_" . $level2_menu . ".txt");
+		processUserFile(constant('ROOTDIR') . "/" . "2_" . $level1_menu . "_" . $level2_menu . ".txt");
 	}
 	if ($level3_menu != "") 
 	{
-		echo '<!-- start readfilexx for level3 -->' .PHP_EOL;
-		readfilexx(constant('ROOTDIR') . "/" . "3_" . $level1_menu . "_" . $level2_menu . '_' . $level3_menu . ".txt");
+		echo '<!-- start processUserFile() for level3 -->' .PHP_EOL;
+		processUserFile(constant('ROOTDIR') . "/" . "3_" . $level1_menu . "_" . $level2_menu . '_' . $level3_menu . ".txt");
 	}
 	
 
-	end_page(); 
+	endPage(); 
 	
 	
 }
 
-function breadcrumbsBS($mLevel1, $mLevel2, $mLevel3)
+function breadCrumbsBS($mLevel1, $mLevel2, $mLevel3)
 {
 	$href="index.php";
 	$href1="index.php?menu=" . $mLevel1;
@@ -514,7 +502,7 @@ function breadcrumbsBS($mLevel1, $mLevel2, $mLevel3)
 }
 
 
-function readfilexx($filename)
+function processUserFile($filename)
 {
  global $menucontext_level1;
  global $menucontext_level2;
@@ -539,7 +527,7 @@ function readfilexx($filename)
 			//	echo "<H3><samp>" . $menucontext_level1 . ": </samp><EM>" . $lines[0] . "</EM></H3>" .PHP_EOL;
 				echo "<H2><EM>" . $lines[0] . "</EM></H2>" .PHP_EOL;
 			}
-			$bookmark_list=build_bookmark_list($filename);
+			$bookmark_list=buildBookmarkList($filename);
 			//var_dump($bookmark_list);
 			$row_count+=1;
 			echo '<div class="row"><!-- BEGIN first ROW -->' . PHP_EOL;
@@ -549,7 +537,7 @@ function readfilexx($filename)
 				{
 					// $heading=substr($lines[$i],1);
 					// $heading=extended_ascii_html($heading);
-					 $heading=macros(substr($lines[$i],1));
+					 $heading=getMacros(substr($lines[$i],1));
 					 //echo 'heading = ' . $heading . PHP_EOL;
 					// echo 'line = ' . $lines[$i];
 					// echo 'col count = ' . $col_count;
@@ -593,7 +581,7 @@ function readfilexx($filename)
 					$list_count=count($bookmark_list);
 					if ($list_count == 0)
 					{
-						echo format_error_message('no bookmarks found on this page') . PHP_EOL;
+						echo formatErrorMessage('no bookmarks found on this page') . PHP_EOL;
 					} else
 					{
 						echo '<span class="anchor" id="BM_"></span>' .PHP_EOL;
@@ -623,7 +611,7 @@ function readfilexx($filename)
 				}
 				else
 				{
-					echo macros($lines[$i]) . PHP_EOL; 
+					echo getMacros($lines[$i]) . PHP_EOL; 
 					if ($blnPassThrough  ==false)
 					{
 						echo '<br>';
@@ -640,7 +628,7 @@ function readfilexx($filename)
 	}
 }
 
-function build_bookmark_list($filename)
+function buildBookmarkList($filename)
 {
 	$StartTag="<!--BM>";
 	$EndTag="</BM-->";
@@ -669,7 +657,7 @@ function build_bookmark_list($filename)
 						$TrailText=substr($input,$EndPos+$LenEnd);
 						$TagContent=substr($input,$StartPos+$LenStart,$EndPos-($StartPos+$LenStart));
 						$output=$TagContent;
-						$bookmark_list[]=extended_ascii_html($output);
+						$bookmark_list[]=extendedAsciiHtml($output);
 					}
 				}
 			}
@@ -678,7 +666,7 @@ function build_bookmark_list($filename)
 	return $bookmark_list;
 }
 
-function get_file_list()
+function getFileList()
 {
 	$file_list=array();
 	$directory=constant('ROOTDIR');
@@ -721,7 +709,7 @@ function get_file_list()
 	return $file_list;
 }
 
-function get_tag_contents($input, $tag)
+function getTagContents($input, $tag)
 {
 	//echo 'Tag = ' . $tag . ', input=' . $input . '<br>';
 	$output=array();
@@ -755,10 +743,10 @@ function get_tag_contents($input, $tag)
 	}
 	
 }
-function macros($input)
+function getMacros($input)
 {
 	global $blnPassThrough;
-	$result = get_tag_contents($input, "PASS");
+	$result = getTagContents($input, "PASS");
 	if ( $result !== false)
 	{
 		$LeadText=$result[0];
@@ -781,7 +769,7 @@ function macros($input)
 	$TrailText="";
 	$ReturnText="";
 	//
-	$result = get_tag_contents($input, "INLINE");
+	$result = getTagContents($input, "INLINE");
 	if ( $result !== false)
 	{
 		$LeadText=$result[0];
@@ -796,25 +784,25 @@ function macros($input)
 			$argument=$items[1];
 		}
 
-		inline_function($function_name, $argument);
+		inlineFunction($function_name, $argument);
 	}
 
 	//
 
 	//
 	//
-	$result = get_tag_contents($input, "URL");
+	$result = getTagContents($input, "URL");
 	if ( $result !== false)
 	{
 		$LeadText=$result[0];
 		$TagContent=$result[1];
 		$TrailText=$result[2];
-		$output=lookup_url($TagContent);
+		$output=lookupUrl($TagContent);
 	}
 	//
 
 	//
-	$result = get_tag_contents($input, "IMG");
+	$result = getTagContents($input, "IMG");
 	if ( $result !== false)
 	{
 		$LeadText=$result[0];
@@ -832,10 +820,10 @@ function macros($input)
 			$caption=$items[3];
 		}
 		
-		$output=lookup_image($name,$width,$height, $caption);
+		$output=lookupImage($name,$width,$height, $caption);
 	}
 	//
-	$result = get_tag_contents($input, "IMGPAGE");
+	$result = getTagContents($input, "IMGPAGE");
 	if ( $result !== false)
 	{
 		$LeadText=$result[0];
@@ -853,11 +841,11 @@ function macros($input)
 			$caption=$items[3];
 			$filename=$items[4];
 		}
-		$url=filename_to_url_menu($filename);
-		$output=lookup_image_url($name,$width,$height, $caption, $url);
+		$url=filenameToUrlMenu($filename);
+		$output=lookupImageUrl($name,$width,$height, $caption, $url);
 	}
 	//
-	$result = get_tag_contents($input, "IMGLINK");
+	$result = getTagContents($input, "IMGLINK");
 	if ( $result !== false)
 	{
 		$LeadText=$result[0];
@@ -877,12 +865,12 @@ function macros($input)
 		}
 		//qqqqq
 		//echo 'link = ' . $link;
-		$url=lookup_link_url($link);
+		$url=lookupLinkUrl($link);
 		//echo 'url = ' . $url;
-		$output=lookup_image_url($name,$width,$height, $caption, $url);
+		$output=lookupImageUrl($name,$width,$height, $caption, $url);
 	}
 	//
-	$result = get_tag_contents($input, "LINKPAGE");
+	$result = getTagContents($input, "LINKPAGE");
 	if ( $result !== false)
 	{
 		$LeadText=$result[0];
@@ -899,21 +887,21 @@ function macros($input)
 			$filename=$TagContent;
 			$text=$filename;
 		}
-		$output='<a href="' . filename_to_url_menu($filename) . '">' . $text . '</a>';
+		$output='<a href="' . filenameToUrlMenu($filename) . '">' . $text . '</a>';
 //				$output=filename_to_href_menu($filename);
 //		$output=lookup_image_url($name,$width,$height, $caption, $url);
 	}
 	//
-	$result = get_tag_contents($input, "SPECS");
+	$result = getTagContents($input, "SPECS");
 	if ( $result !== false)
 	{
 		$LeadText=$result[0];
 		$TagContent=$result[1];
 		$TrailText=$result[2];
-		$output=lookup_specs($TagContent);
+		$output=lookupSpecs($TagContent);
 	}
 	//
-	$result = get_tag_contents($input, "CCT");
+	$result = getTagContents($input, "CCT");
 	if ( $result !== false)
 	{
 		$LeadText=$result[0];
@@ -922,7 +910,7 @@ function macros($input)
 		$output=lookup_cct($TagContent);
 	}
 //
-	$result = get_tag_contents($input, "BM");
+	$result = getTagContents($input, "BM");
 	if ( $result !== false)
 	{
 		$LeadText=$result[0];
@@ -934,35 +922,35 @@ function macros($input)
 	//
 
  
-	$ReturnText=extended_ascii_html($LeadText);
-	$ReturnText.=extended_ascii_html($output);
+	$ReturnText=extendedAsciiHtml($LeadText);
+	$ReturnText.=extendedAsciiHtml($output);
 	if ($TrailText != "")
 	{
-		$TrailText=macros($TrailText);
-		$ReturnText.=extended_ascii_html($TrailText);
+		$TrailText=getMacros($TrailText);
+		$ReturnText.=extendedAsciiHtml($TrailText);
 	}
 	//echo "done with macros()";
 	return $ReturnText;
 }
 
 
-function format_error_message($text)
+function formatErrorMessage($text)
 {
 	$errText='<p class="text-danger"><b>Error : ' .  $text . '</b></p>';
 	return $errText;
 
 }
-function extended_ascii_html($extended_ascii_text)
+function extendedAsciiHtml($extended_ascii_text)
 {
 	$ReturnText="";
 	for ($i=0; $i < strlen($extended_ascii_text); $i++)
 	{
-	$ReturnText .= replace_8bit_html($extended_ascii_text[$i]);
+	$ReturnText .= replace8bitHtml($extended_ascii_text[$i]);
 	}
 	return $ReturnText;
 }
 
-function replace_8bit_html($character)
+function replace8bitHtml($character)
 {
 	$ascii_value=ord($character);
 	switch($ascii_value)
@@ -1106,21 +1094,21 @@ function check()
 	start_page();
 	//set_time_limit(0);
 	echo '<h2>Check of your URL links as used in the pages</h2><br>please wait ....<br>';
-	$html=check_url_pages();
+	$html=checkUrlPages();
 	echo $html;
 	echo '<br><h2>Check of your external URL links</h2><br>please wait ....<br>';
-	$html=check_url_internet();
+	$html=checkUrlInternet();
 	echo $html;
 	echo '<br><h2>Check of your images</h2><br>please wait ....<br>';
-	$html=check_image_pages();
+	$html=checkImagePages();
 	echo $html;
 	echo '<br><h2>Check images in image folder</h2><br>please wait ....<br>';
-	$html=check_images_folder(constant('ROOTDIR') . '/images');
+	$html=checkImagesFolder(constant('ROOTDIR') . '/images');
 	echo $html;
 	echo '<br><br><br><br>' .PHP_EOL;
 }
 
-function display_sitemap()
+function displaySitemap()
 {
 	include(constant('SCRIPTSDIR') . "/appinfo.inc.php");
 	global $sitemap;
@@ -1136,8 +1124,8 @@ function display_sitemap()
 	$num_files_rest=-1;
 	$files_rest = array();
 	$directory=constant('ROOTDIR');
-	start_page();
-	$files=get_file_list();
+	startPage();
+	$files=getFileList();
     // add other files
 	$files[]= '_contact';
 	$files[]= '_disclaimer';
@@ -1164,8 +1152,8 @@ function display_sitemap()
 	foreach ($files as $filename)
 	{
 		//echo $filename . '<br>';
-		$title=sitemap_getheading_from_file($directory . "/" . $filename . ".txt");
- 		$url=filename_to_url_menu($filename);
+		$title=sitemapGetheadingFromFile($directory . "/" . $filename . ".txt");
+ 		$url=filenameToUrlMenu($filename);
 		$level=substr($filename,0, 2);
 		switch ($level)
 		{
@@ -1180,8 +1168,8 @@ function display_sitemap()
 					//echo nl2br("Filename 2= [". $filename . "]\n");
 					if (substr($filename,0, $len_level1) == "2_" . $level1)
 					{
-						$title=sitemap_getheading_from_file($directory . "/" . $filename . ".txt");
-				 		$url=filename_to_url_menu($filename);
+						$title=sitemapGetheadingFromFile($directory . "/" . $filename . ".txt");
+				 		$url=filenameToUrlMenu($filename);
 						$level2=substr($filename,$len_level1+1);
 						echo '...<a href="' . $url . '">' . $level2 . '</a><I>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $title . '</i><br>' . PHP_EOL;
 					}
@@ -1197,10 +1185,10 @@ function display_sitemap()
 		 } 
 	}
 
-	end_page();
+	endPage();
 }
 
-function sitemap_getheading_from_file($filename)
+function sitemapGetheadingFromFile($filename)
 {
 //
 $heading="";
@@ -1213,17 +1201,17 @@ $heading="";
 			$heading=$lines[0];
 		}
 	}
-	$heading = remove_cr($heading);
+	$heading = removeCr($heading);
 	return $heading;
 }
 
-function remove_cr($input)
+function removeCr($input)
 {
 	return(preg_replace("/[\\n\\r]+/", "", $input));
 }
 
 
-function show_header()
+function showHeader()
 {
 	
 	include(constant('SCRIPTSDIR') . "/appinfo.inc.php");
@@ -1259,17 +1247,17 @@ function show_header()
 	echo '<a id="TopOfPage"></a>' . PHP_EOL; 
 }
 
-function start_page()
+function startPage()
 {
 	echo '<div class="container-fluid" style="margin-bottom:30px;"><!-- START CONTAINER -->' . PHP_EOL;  
 }
 
-function end_page()
+function endPage()
 {
 	echo '</div><!-- END CONTAINER -->' . PHP_EOL;
 }
 
-function show_footer()
+function showFooter()
 {
 	include(constant('SCRIPTSDIR') . "/appinfo.inc.php");
 	//echo  "<HR>";
@@ -1279,7 +1267,7 @@ function show_footer()
 	$contact='<a href="index.php?contact=1">Contact</a>';
 	$copyrightscripting='(' . constant('SCRIPT_TITLE') . ' by Chris van Gorp)';
 	$spacing='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-	echo '<nav class="navbar fixed-bottom navbar-solid navbar-expand-md navbar-light"  style="background-color: #e3f2fd;">' . PHP_EOL;
+	echo '<nav class="navbar fixed-bottom navbar-solid navbar-expand-md navbar-light"  style="background-color:' . $App_BGColorNavbarBottom . ';">' . PHP_EOL;
     echo '  <a class="navbar-brand" href="#TopOfPage">' . $App_Name . ' : <small class="text-muted">' . $App_Tagline . '</small></a>' . PHP_EOL;
  	echo '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myFooterNavbar" aria-controls="myFooterNavbar" aria-expanded="false" aria-label="Toggle navigation">' .PHP_EOL;
     echo '<span class="navbar-toggler-icon"></span>' . PHP_EOL;
@@ -1323,10 +1311,10 @@ function show_footer()
 	echo "</BODY>" . PHP_EOL;
 	echo "</HTML>" . PHP_EOL;
 }
-function display_about()
+function displayAbout()
 {
 	include(constant('SCRIPTSDIR') . "/appinfo.inc.php");
-	start_page();
+	startPage();
 	echo '<h2>About WebBuilder</h2>' . PHP_EOL;
 	echo '<br>WebBuilder is created by Chris van Gorp in 2012, in 2020 Bootstrap 4 replaced my own CSS to make it responsive and better looking.' . PHP_EOL;
 	echo '<br><a href="https://github.com/OldChris/webbuilder" target="_blank">View / download source from Github</a> <br><br>' .PHP_EOL; 
@@ -1341,26 +1329,26 @@ function display_about()
     	echo 'Bootstrap is loaded from CDN<br>' . PHP_EOL;
     }
 
-	end_page();
+	endPage();
 }
 
-function display_contact()
+function displayContact()
 {
-	start_page();
-	readfilexx(constant('ROOTDIR') . "/_contact.txt");
-	end_page();
+	startPage();
+	processUserFile(constant('ROOTDIR') . "/_contact.txt");
+	endPage();
 } 
 
-function display_disclaimer()
+function displayDisclaimer()
 {
-	start_page();
-	readfilexx(constant('ROOTDIR') . "/_disclaimer.txt");
-	end_page();
+	startPage();
+	processUserFile(constant('ROOTDIR') . "/_disclaimer.txt");
+	endPage();
 } 
 
-function filename_to_url_menu($filename)
+function filenameToUrlMenu($filename)
 {
-	$menulevels=filename_to_menulevels($filename);	
+	$menulevels=filenameToMenulevels($filename);	
 	$url="";
 	$level=substr($filename,0,1);
 	switch ($level)
@@ -1388,12 +1376,12 @@ function filename_to_url_menu($filename)
 	return $url;
 }
 
-function filename_to_href_menu($filename, $text="")
+function filenameToHrefMenu($filename, $text="")
 {
-	$menulevels=filename_to_menulevels($filename);
+	$menulevels=filenameToMenulevels($filename);
 	//$level1_menuitem, $level2_menuitem,	$level3_menuitem=explode(";", $menulevels);
 	//echo 'filename = ' . $filename . ', 1= ' . $menulevels[0] . ', 2 = ' . $menulevels[1] . ', 3 = ' . $menulevels[2] . '<br>';
-	$url=filename_to_url_menu($filename);
+	$url=filenameToUrlMenu($filename);
 	$href="";
 	$level=substr($filename,0,1);
 	switch ($level)
@@ -1442,7 +1430,7 @@ function filename_to_href_menu($filename, $text="")
 	return $href;
 }
 
-function filename_to_menulevels($filename)
+function filenameToMenulevels($filename)
 {
 	//echo 'filename to menulevel ' . $filename . ' <br>';
 	$level1_menuitem="";

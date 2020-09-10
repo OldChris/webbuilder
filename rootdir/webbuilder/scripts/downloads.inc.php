@@ -6,7 +6,7 @@
  */
  
 
-function show_downloads_folder()
+function showDownloadsFolder()
 {
 	include("appinfo.inc.php");
 	//

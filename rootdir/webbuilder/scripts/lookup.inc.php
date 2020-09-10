@@ -5,7 +5,7 @@
  * Version : March 2017
  */
  
-function filename_to_url_menuxxx($filename)
+function filenameToUrlMenuxxx($filename)
 {
 	$result="";
     $fullPath=constant('ROOTDIR') . '$filename';
@@ -20,13 +20,13 @@ function filename_to_url_menuxxx($filename)
 	return $result;
 }
 
-function lookup_specs($name)
+function lookupSpecs($name)
 {
 	$output=csv2table(constant('ROOTDIR'). "/specifications.csv","***Key***", $name);
 	return $output;
 }
 
-function lookup_image($name,$width,$height,$caption="yes" )
+function lookupImage($name,$width,$height,$caption="yes" )
 {
     $matched=false;
 	$description="";
@@ -55,7 +55,7 @@ function lookup_image($name,$width,$height,$caption="yes" )
 		{
 			if (! file_exists($image_path))
 			{
-				$html= format_error_message('The path is not found : ' . $image_path . ' please check spelling.') . PHP_EOL; 
+				$html= formatErrorMessage('The path is not found : ' . $image_path . ' please check spelling.') . PHP_EOL; 
 			}
 			else
 			{
@@ -91,18 +91,18 @@ function lookup_image($name,$width,$height,$caption="yes" )
 		}
 		else
 		{
-			$html=format_error_message('entry ' . $name . ' not found in _images.txt');
+			$html=formatErrorMessage('entry ' . $name . ' not found in _images.txt');
 		}
 	}
 	else
 	{
-		$html=format_error_message('lookup_image() : file _images.txt not found');
+		$html=formatErrorMessage('lookup_image() : file _images.txt not found');
 	}
 	return $html;
 }
 
 
-function lookup_image_url($name,$width,$height,$caption="yes", $url="" )
+function lookupImageUrl($name,$width,$height,$caption="yes", $url="" )
 {
 	//echo 'name = ' . $name . ' width=' . $width . ' height=' . $height . ' caption=' . $caption . 'url=' . $url;
 	$description="";
@@ -129,7 +129,7 @@ function lookup_image_url($name,$width,$height,$caption="yes", $url="" )
 	}
 	else
 	{
-		echo format_error_message("lookup_image() : file not found");
+		echo formatErrorMessage("lookup_image() : file not found");
 	}
 	// format HTML
 	if ($width=="" and $height=="")
@@ -185,7 +185,7 @@ function lookup_image_url($name,$width,$height,$caption="yes", $url="" )
 	return $html;
 }
 
-function lookup_link_url($input)
+function lookupLinkUrl($input)
 {
 	$description="";
 	$image_path="";
@@ -213,12 +213,12 @@ function lookup_link_url($input)
 	}
 	else
 	{
-		echo format_error_message("lookup_url() : file not found");
+		echo formatErrorMessage("lookup_url() : file not found");
 	}
     return $url;
 }
 
-function lookup_url($input)
+function lookupUrl($input)
 {
 	$description="";
 	$image_path="";
@@ -273,7 +273,7 @@ function lookup_url($input)
 	}
 	else
 	{
-		echo format_error_message("lookup_url() : file not found");
+		echo formatErrorMessage("lookup_url() : file not found");
 	}
     return $html;
 }

@@ -31,30 +31,30 @@ if (isset($_GET['check']))   	{ $l_check=$_GET['check']; }    	else { $l_check="
 if (isset($_GET['about']))   	{ $l_about=$_GET['about']; }    	else { $l_about=""; }
 //?srch-term=tank
 //
-read_defaults();
-show_header("norefresh");
+readDefaults();
+showHeader("norefresh");
 
 
-show_menu($l_menu, $l_submenu);
+showMenu($l_menu, $l_submenu);
 
 
 if (($l_sitemap == "1") or ($l_contact == "1") or ($l_disclaimer == "1") or ( $l_srchterm !="" ) or ($l_check =="1" or ($l_about == "1")))
 {
 	if ($l_sitemap == "1")
 	{
-		display_sitemap();
+		displaySitemap();
 	}
 	if ($l_contact == "1")
 	{
-		display_contact();
+		displayContact();
 	}
 	if ($l_disclaimer == "1")
 	{
-		display_disclaimer();
+		displayDisclaimer();
 	}
 	if  ( $l_srchterm !="" )
 	{
-		show_search($l_srchterm);
+		showSearch($l_srchterm);
 	}
 	if  ( $l_check =="1" )
 	{
@@ -62,15 +62,15 @@ if (($l_sitemap == "1") or ($l_contact == "1") or ($l_disclaimer == "1") or ( $l
 	}
 	if  ( $l_about =="1" )
 	{
-		display_about();
+		displayAbout();
 	}
 } 
 else
 {
-  show_page($l_menu, $l_submenu, $l_menul3);
+  showPage($l_menu, $l_submenu, $l_menul3);
 }
 
-show_footer();
+showFooter();
 
 
 ?>

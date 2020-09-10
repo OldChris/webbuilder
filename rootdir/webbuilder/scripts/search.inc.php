@@ -6,15 +6,15 @@
  */
  
 
-function search_site($search_text)
+function searchSite($search_text)
 {
-	include("inc.appinfo.php");
+	include("appinfo.inc.php");
 	//
 	$directory=constant('ROOTDIR');
 	$result=array();
 	$menu=array();
 	$output="";
-	$files=get_file_list();
+	$files=getFileList();
     // add other files
 	$files[]= '_contact';
 	$files[]= '_disclaimer';
@@ -22,12 +22,12 @@ function search_site($search_text)
 	{
 		foreach ($files as $filename)
 		{
-			$result_file=search_file($directory . '/' . $filename . '.txt', $search_text);
+			$result_file=searchFile($directory . '/' . $filename . '.txt', $search_text);
 			if ($result_file !== false)
 			{
 				//echo 'filename = ' . $filename . '<br>';
 				$result[]=$result_file;
-				$menu[]=filename_to_href_menu(pathinfo($filename, PATHINFO_FILENAME));
+				$menu[]=filenameToHrefMenu(pathinfo($filename, PATHINFO_FILENAME));
 			}
 		}
 	}
@@ -49,7 +49,7 @@ function search_site($search_text)
 	}
 }
 
-function search_file($filename, $search_text)
+function searchFile($filename, $search_text)
 {
 	//echo 'filename ' . $filename . ',  search text ' . $search_text . '<br>';
 	$output="";
@@ -66,7 +66,7 @@ function search_file($filename, $search_text)
 				$pos = strpos($regel, $zoek);
 				if ($pos !== false)
 				{
-					$output.=put_bold($lines[$i],$search_text);			
+					$output.=putBold($lines[$i],$search_text);			
 				}
 			}
 		}
@@ -87,7 +87,7 @@ function search_file($filename, $search_text)
 	
 }
 
-function put_bold($input, $search_text)
+function putBold($input, $search_text)
 {
 	$output="";
 	

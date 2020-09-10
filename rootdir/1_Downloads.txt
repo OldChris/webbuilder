@@ -4,6 +4,6 @@ My downloads
 Here are some downloads listed
 
 .List of downloads
-<!--INLINE>show_downloads_folder</INLINE-->
+<!--INLINE>showDownloadsFolder</INLINE-->
 
 end of list

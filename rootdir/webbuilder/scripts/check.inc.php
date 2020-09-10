@@ -9,7 +9,7 @@
 //
 
 
-function check_url_pages()
+function checkUrlPages()
 {
 	$in_file=array();
 	$html="";
@@ -30,7 +30,7 @@ function check_url_pages()
 			$items = explode(";", $input);
 			if (count($items) !=3)
 			{
-				echo format_error_message('incorrect count= ' . count($items) . ' at line = ' . $line);
+				echo formatErrorMessage('incorrect count= ' . count($items) . ' at line = ' . $line);
 			}
 			else
 			{
@@ -41,10 +41,10 @@ function check_url_pages()
 	}
 	else
 	{
-		die ("check_url_pages() : _links.txt file not found");
+		die ("checkUrlPages() : _links.txt file not found");
 	}
 	// look for link tag in all files
-	$files=get_file_list();
+	$files=getFileList();
 	if ($files !== false)
 	{
 		foreach ($files as $filename)
@@ -56,7 +56,7 @@ function check_url_pages()
 			for($i=0;$i<count($lines);$i++)
 			{
 				$input=$lines[$i];
-				$TagContent=get_tag_contents($input,"URL");
+				$TagContent=getTagContents($input,"URL");
 				if ($TagContent !== false)
 				{
 					//echo 'Tag content = [', $TagContent[1] . ']';
@@ -72,14 +72,10 @@ function check_url_pages()
 			}	
 		}
 	}
-	
-	
-	
 	return $html;
-    
 }
 
-function check_url_internet()
+function checkUrlInternet()
 {
 	// see also https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 	$html="";
@@ -119,7 +115,7 @@ function check_url_internet()
 	return $html;
 }
 
-function check_images_folder($image_folder)
+function checkImagesFolder($image_folder)
 {
     if(is_dir($image_folder)){
     	echo 'scan dir ' . $image_folder . PHP_EOL;
@@ -128,12 +124,12 @@ function check_images_folder($image_folder)
         foreach( $files as $file )
         {
 	        if(is_dir($file)){
-    	        check_images_folder( $file );
+    	        checkImagesFolder( $file );
     	    }
     	    else
     	    {
     	    	if (strpos($file, ' ') !== false) {
-	    	    	echo format_error_message('-- file = ' . $file . ' : filename contains space(s)') . PHP_EOL;
+	    	    	echo formatErrorMessage('-- file = ' . $file . ' : filename contains space(s)') . PHP_EOL;
 				}
 				else
 				{
@@ -146,7 +142,7 @@ function check_images_folder($image_folder)
 
 
 
-function check_image_pages()
+function checkImagePages()
 {
 	$in_file=array();
 	$html="";
@@ -169,17 +165,17 @@ function check_image_pages()
 			//echo 'count= ' . count($items);
 			if (count($items) !=3)
 			{
-				echo format_error_message('<br>_images.txt : incorrect count= ' . count($items) . ' at line = ' . $line);
+				echo formatErrorMessage('<br>_images.txt : incorrect count= ' . count($items) . ' at line = ' . $line);
 			}
 			else
 			{
-				if (image_file_exists($items[2]) )
+				if (imageFileExists($items[2]) )
 				{
 					echo 'OK, image ' . $items[2] . ' exists<br>';
 				}
 				else
 				{
-					echo  format_error_message('image '. $items[2] . ' does not exists');
+					echo  formatErrorMessage('image '. $items[2] . ' does not exists');
 				}
 			}
 			$infile[]=$items[0];
@@ -188,10 +184,10 @@ function check_image_pages()
 	}
 	else
 	{
-		echo format_error_message('check_image_pages() : _images.txt file not found');
+		echo formatErrorMessage('check_image_pages() : _images.txt file not found');
 	}
 	// look for link tag in all files
-	$files=get_file_list();
+	$files=getFileList();
 	if ($files !== false)
 	{
 		foreach ($files as $filename)
@@ -203,7 +199,7 @@ function check_image_pages()
 			for($i=0;$i<count($lines);$i++)
 			{
 				$input=$lines[$i];
-				$TagContent=get_tag_contents($input,"IMG");
+				$TagContent=getTagContents($input,"IMG");
 				if ($TagContent !== false)
 				{
 					$items = explode(",", $TagContent[1]);
@@ -217,7 +213,7 @@ function check_image_pages()
 					}
 					else
 					{
-						echo format_error_message(' file ' . $filename . ' : ' . $items[0] . ' is not in _images.txt file!');
+						echo formatErrorMessage(' file ' . $filename . ' : ' . $items[0] . ' is not in _images.txt file!');
 					}
 				}
 			}	
@@ -227,13 +223,13 @@ function check_image_pages()
 	return $html;
 }
 
-function image_file_exists($image_filename)
+function imageFileExists($image_filename)
 {
 //	echo $image_filename . '<br>';
 	$poshttp=strpos($image_filename,'http');
 	if ($poshttp !== false)
 	{
-		$urlstatus=url_exists($image_filename);
+		$urlstatus=urlExists($image_filename);
 		return $urlstatus;
 	}
 	else
@@ -249,7 +245,7 @@ function image_file_exists($image_filename)
 	}
 }
 
-function url_exists($url)
+function urlExists($url)
 {
 	//echo 'url = ' . $url . '<br>'; 
 	$handle = curl_init($url);
@@ -261,8 +257,6 @@ function url_exists($url)
 	curl_close($handle);
 
 	$status="";
-		//echo 'code = ' . $httpCode . '<br>'; 
-
 	switch ($httpCode)
 	{
 		// first all known good response codes
