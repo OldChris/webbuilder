@@ -41,7 +41,7 @@ function showDownloadsFolder()
 	}
 	else
 	{
-		die ("check_url_pages() : _downloads.txt file not found");
+		echo  formatErrorMessage("showDownloadsFolder() : _downloads.txt file not found");
 	}
 
 
