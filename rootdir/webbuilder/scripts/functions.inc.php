@@ -1254,6 +1254,7 @@ function startPage()
 
 function endPage()
 {
+	echo '<br>' . PHP_EOL;
 	echo '</div><!-- END CONTAINER -->' . PHP_EOL;
 }
 
