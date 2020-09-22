@@ -3,7 +3,6 @@ global $App_Name;
 global $App_Tagline; 
 global $App_Icon; 
 global $App_Logo; 
-global $App_Version;
 global $App_Copyright; 
 global $App_Description;
 global $App_Keywords;
