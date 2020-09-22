@@ -4,12 +4,13 @@
  * PHP WebBuilder by Chris van Gorp
  * Version : March 2017
  */
-
+define('APP_VERSION','0.1');
 include constant('SCRIPTSDIR') . "/appinfo.inc.php";
 include constant('SCRIPTSDIR') . "/lookup.inc.php";
 include constant('SCRIPTSDIR') . "/search.inc.php";
 include constant('SCRIPTSDIR') . "/downloads.inc.php";
 include constant('USERSCRIPTSDIR') . "/user_functions.php";
+
 
 global $menucontext_level1;
 global $menucontext_level2;
@@ -934,12 +935,67 @@ function getMacros($input)
 }
 
 
-function formatErrorMessage($text)
+function formatUserMessage($text, $severity=null)
 {
-	$errText='<p class="text-danger"><b>Error : ' .  $text . '</b></p>';
+	$bs_attribute="text-danger";
+	$message_prefix="Error";
+	if ($severity === null )
+	{
+		$errText='<p class="' . $bs_attribute . '"><b>' . $message_prefix . ' : ' .  $text . '</b></p>';
+	}
+	else
+	{
+		switch($severity)
+	    {
+			case 'I': 
+				$bs_attribute="text-success";
+				$message_prefix="Ok";
+				break;
+			case 'W': 
+				$bs_attribute="text-warning";
+				$message_prefix="Warning";
+				break;
+			default:
+				break;
+		}
+		$errText='<p class="' . $bs_attribute . '"><b>' . $message_prefix . ' : ' .  $text . '</b></p>';
+
+	}
 	return $errText;
 
 }
+
+
+function formatErrorMessage($text, $severity=null)
+{
+	$bs_attribute="text-danger";
+	$message_prefix="Error";
+	if ($severity === null )
+	{
+		$errText='<p class="' . $bs_attribute . '"><b>' . $message_prefix . ' : ' .  $text . '</b></p>';
+	}
+	else
+	{
+		switch($severity)
+	    {
+			case 'I': 
+				$bs_attribute="text-success";
+				$message_prefix="Ok";
+				break;
+			case 'W': 
+				$bs_attribute="text-warning";
+				$message_prefix="Warning";
+				break;
+			default:
+				break;
+		}
+		$errText='<p class="' . $bs_attribute . '"><b>' . $message_prefix . ' : ' .  $text . '</b></p>';
+
+	}
+	return $errText;
+
+}
+
 function extendedAsciiHtml($extended_ascii_text)
 {
 	$ReturnText="";
@@ -1318,7 +1374,6 @@ function displayAbout()
 	startPage();
 	echo '<h2>About WebBuilder</h2>' . PHP_EOL;
 	echo '<br>WebBuilder is created by Chris van Gorp in 2012, in 2020 Bootstrap 4 replaced my own CSS to make it responsive and better looking.' . PHP_EOL;
-	echo '<br><a href="https://github.com/OldChris/webbuilder" target="_blank">View / download source from Github</a> <br><br>' .PHP_EOL; 
 
     if ($App_Bootstrap_local)
     {
@@ -1329,9 +1384,32 @@ function displayAbout()
     {
     	echo 'Bootstrap is loaded from CDN<br>' . PHP_EOL;
     }
+    // https://docs.github.com/en/rest/reference/repos#get-the-latest-release
+    $giturl ='https://github.com/OldChris/webbuilder';
+    $gitapiurl ='https://api.github.com/repos/OldChris/webbuilder';
+    $giturlVersion = $gitapiurl . '/releases';
+    $headers=get_headers($giturlVersion);
+    //echo 'headers[0] = ' . $headers[0] . PHP_EOL;
 
+    $options  = array('http' => array('user_agent'=> $_SERVER['HTTP_USER_AGENT']));
+    $context  = stream_context_create($options);
+    $data = file_get_contents($giturlVersion, false, $context); 
+    $user_data  = json_decode($data, true);
+    $tag = $user_data['0']['tag_name'];
+    $appVersion=constant('APP_VERSION');
+    if ($tag != $appVersion )
+    {
+	    echo formatUserMessage('This version : ' . $appVersion . ', Version on GitHub : ' . $tag , "W");
+    }
+    else
+    {
+	    echo formatUserMessage('This version : ' . $appVersion . ', Version on GitHub : ' . $tag , "I");
+    }
+	echo '<br><a href="' . $giturl . '" target="_blank">View / download source from Github</a> <br><br>' .PHP_EOL; 
 	endPage();
 }
+
+
 
 function displayContact()
 {
