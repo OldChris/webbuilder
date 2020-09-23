@@ -30,7 +30,7 @@ function checkUrlPages()
 			$items = explode(";", $input);
 			if (count($items) !=3)
 			{
-				echo formatErrorMessage('incorrect count= ' . count($items) . ' at line = ' . $line);
+				echo formatUserMessage('incorrect count= ' . count($items) . ' at line = ' . $line);
 			}
 			else
 			{
@@ -104,7 +104,7 @@ function checkUrlInternet()
 			// get attributes
 			$url=$items[1];
 			$description=$items[2];
-   			$status = url_exists($url);
+   			$status = urlExists($url);
 			echo $status . ' : ' . $url . '<br>'; 
 		}
 	}
@@ -129,7 +129,7 @@ function checkImagesFolder($image_folder)
     	    else
     	    {
     	    	if (strpos($file, ' ') !== false) {
-	    	    	echo formatErrorMessage('-- file = ' . $file . ' : filename contains space(s)') . PHP_EOL;
+	    	    	echo formatUserMessage('-- file = ' . $file . ' : filename contains space(s)') . PHP_EOL;
 				}
 				else
 				{
@@ -165,7 +165,7 @@ function checkImagePages()
 			//echo 'count= ' . count($items);
 			if (count($items) !=3)
 			{
-				echo formatErrorMessage('<br>_images.txt : incorrect count= ' . count($items) . ' at line = ' . $line);
+				echo formatUserMessage('<br>_images.txt : incorrect count= ' . count($items) . ' at line = ' . $line);
 			}
 			else
 			{
@@ -175,7 +175,7 @@ function checkImagePages()
 				}
 				else
 				{
-					echo  formatErrorMessage('image '. $items[2] . ' does not exists');
+					echo  formatUserMessage('image '. $items[2] . ' does not exists');
 				}
 			}
 			$infile[]=$items[0];
@@ -184,7 +184,7 @@ function checkImagePages()
 	}
 	else
 	{
-		echo formatErrorMessage('check_image_pages() : _images.txt file not found');
+		echo formatUserMessage('check_image_pages() : _images.txt file not found');
 	}
 	// look for link tag in all files
 	$files=getFileList();
@@ -213,7 +213,7 @@ function checkImagePages()
 					}
 					else
 					{
-						echo formatErrorMessage(' file ' . $filename . ' : ' . $items[0] . ' is not in _images.txt file!');
+						echo formatUserMessage(' file ' . $filename . ' : ' . $items[0] . ' is not in _images.txt file!');
 					}
 				}
 			}	

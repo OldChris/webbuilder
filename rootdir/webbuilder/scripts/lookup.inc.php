@@ -15,7 +15,7 @@ function filenameToUrlMenuxxx($filename)
 	}
 	else
 	{
-		format_error_message('file ' . $fullPath . ' not found');
+		formatUsermessage('file ' . $fullPath . ' not found');
 	}
 	return $result;
 }
@@ -55,7 +55,7 @@ function lookupImage($name,$width,$height,$caption="yes" )
 		{
 			if (! file_exists($image_path))
 			{
-				$html= formatErrorMessage('The path is not found : ' . $image_path . ' please check spelling.') . PHP_EOL; 
+				$html= formatUserMessage('The path is not found : ' . $image_path . ' please check spelling.') . PHP_EOL; 
 			}
 			else
 			{
@@ -91,12 +91,12 @@ function lookupImage($name,$width,$height,$caption="yes" )
 		}
 		else
 		{
-			$html=formatErrorMessage('entry ' . $name . ' not found in _images.txt');
+			$html=formatUserMessage('entry ' . $name . ' not found in _images.txt');
 		}
 	}
 	else
 	{
-		$html=formatErrorMessage('lookup_image() : file _images.txt not found');
+		$html=formatUserMessage('lookup_image() : file _images.txt not found');
 	}
 	return $html;
 }
@@ -129,7 +129,7 @@ function lookupImageUrl($name,$width,$height,$caption="yes", $url="" )
 	}
 	else
 	{
-		echo formatErrorMessage("lookup_image() : file not found");
+		echo formatUserMessage("lookup_image() : file not found");
 	}
 	// format HTML
 	if ($width=="" and $height=="")
@@ -213,7 +213,7 @@ function lookupLinkUrl($input)
 	}
 	else
 	{
-		echo formatErrorMessage("lookup_url() : file not found");
+		echo formatUserMessage("lookup_url() : file not found");
 	}
     return $url;
 }
@@ -273,7 +273,7 @@ function lookupUrl($input)
 	}
 	else
 	{
-		echo formatErrorMessage("lookup_url() : file not found");
+		echo formatUserMessage("lookup_url() : file not found");
 	}
     return $html;
 }

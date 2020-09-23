@@ -5,12 +5,20 @@
  * Version : March 2017
  */
 define('APP_VERSION','0.1');
+//
+define('CSSDIR',constant('ROOTDIR') . '/webbuilder/css');
+define('JSDIR',constant('ROOTDIR') . '/webbuilder/js');
+define('FONTSDIR',constant('ROOTDIR') . '/webbuilder/fonts');
+define('USERCSSDIR',constant('ROOTDIR') . '/user_css');
+define('USERSCRIPTSDIR',constant('ROOTDIR') . '/user_scripts');
+define('SCRIPT_TITLE','PHP Webbuilder');
+
 include constant('SCRIPTSDIR') . "/appinfo.inc.php";
 include constant('SCRIPTSDIR') . "/lookup.inc.php";
 include constant('SCRIPTSDIR') . "/search.inc.php";
 include constant('SCRIPTSDIR') . "/downloads.inc.php";
 include constant('USERSCRIPTSDIR') . "/user_functions.php";
-
+include_once(constant('SCRIPTSDIR') . "/check.inc.php");
 
 global $menucontext_level1;
 global $menucontext_level2;
@@ -180,15 +188,15 @@ function readDefaults()
 			}
 		} else
 		{
-			echo formatErrorMessage(constant('SCRIPT_TITLE') . ' Fatal error: file with default values not found! (' . $filename . ')');
-			echo formatErrorMessage('script died....');
+			echo formatUserMessage(constant('SCRIPT_TITLE') . ' Fatal error: file with default values not found! (' . $filename . ')');
+			echo formatUserMessage('script died....');
 			showFooter();
 			die;
 		}
 	} else
 	{
-		echo formatErrorMessage(constant('SCRIPT_TITLE') . ' Fatal error: directory with data files not found! (' . $directory . ')');
-		echo formatErrorMessage('script died....');
+		echo formatUserMessage(constant('SCRIPT_TITLE') . ' Fatal error: directory with data files not found! (' . $directory . ')');
+		echo formatUserMessage('script died....');
 		showFooter();
 		die;
 	}
@@ -208,7 +216,7 @@ function inlineFunction($functionname, $argument="")
 	}
 	else
 	{
-		echo formatErrorMessage('Inline-function "' . $functionname . '" not found');	
+		echo formatUserMessage('Inline-function "' . $functionname . '" not found');
 	}
 }
 function theInlineTestFunction()
@@ -582,7 +590,7 @@ function processUserFile($filename)
 					$list_count=count($bookmark_list);
 					if ($list_count == 0)
 					{
-						echo formatErrorMessage('no bookmarks found on this page') . PHP_EOL;
+						echo formatUserMessage('no bookmarks found on this page','W') . PHP_EOL;
 					} else
 					{
 						echo '<span class="anchor" id="BM_"></span>' .PHP_EOL;
@@ -966,35 +974,6 @@ function formatUserMessage($text, $severity=null)
 }
 
 
-function formatErrorMessage($text, $severity=null)
-{
-	$bs_attribute="text-danger";
-	$message_prefix="Error";
-	if ($severity === null )
-	{
-		$errText='<p class="' . $bs_attribute . '"><b>' . $message_prefix . ' : ' .  $text . '</b></p>';
-	}
-	else
-	{
-		switch($severity)
-	    {
-			case 'I': 
-				$bs_attribute="text-success";
-				$message_prefix="Ok";
-				break;
-			case 'W': 
-				$bs_attribute="text-warning";
-				$message_prefix="Warning";
-				break;
-			default:
-				break;
-		}
-		$errText='<p class="' . $bs_attribute . '"><b>' . $message_prefix . ' : ' .  $text . '</b></p>';
-
-	}
-	return $errText;
-
-}
 
 function extendedAsciiHtml($extended_ascii_text)
 {
@@ -1147,7 +1126,7 @@ function replace8bitHtml($character)
 }
 function check()
 {
-	start_page();
+	startPage();
 	//set_time_limit(0);
 	echo '<h2>Check of your URL links as used in the pages</h2><br>please wait ....<br>';
 	$html=checkUrlPages();
@@ -1377,12 +1356,12 @@ function displayAbout()
 
     if ($App_Bootstrap_local)
     {
-    	echo 'Bootstrap is loaded from local server<br>' . PHP_EOL;
+    	echo '<br>Bootstrap is loaded from local server<br>' . PHP_EOL;
 
     }
     else
     {
-    	echo 'Bootstrap is loaded from CDN<br>' . PHP_EOL;
+    	echo '<br>Bootstrap is loaded from CDN<br>' . PHP_EOL;
     }
     // https://docs.github.com/en/rest/reference/repos#get-the-latest-release
     $giturl ='https://github.com/OldChris/webbuilder';
@@ -1406,6 +1385,7 @@ function displayAbout()
 	    echo formatUserMessage('This version : ' . $appVersion . ', Version on GitHub : ' . $tag , "I");
     }
 	echo '<br><a href="' . $giturl . '" target="_blank">View / download source from Github</a> <br><br>' .PHP_EOL; 
+	echo '<br><a href="index.php?check=1">Check files and references to images and websites</a><br>' . PHP_EOL;
 	endPage();
 }
 

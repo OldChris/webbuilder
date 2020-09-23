@@ -41,7 +41,7 @@ function showDownloadsFolder()
 	}
 	else
 	{
-		echo  formatErrorMessage("showDownloadsFolder() : _downloads.txt file not found");
+		echo  formatUserMessage("showDownloadsFolder() : _downloads.txt file not found");
 	}
 
 
