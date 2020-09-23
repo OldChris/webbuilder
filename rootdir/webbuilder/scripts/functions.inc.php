@@ -4,7 +4,7 @@
  * PHP WebBuilder by Chris van Gorp
  * Version : March 2017
  */
-define('APP_VERSION','0.1');
+define('APP_VERSION','v0.2');
 //
 define('CSSDIR',constant('ROOTDIR') . '/webbuilder/css');
 define('JSDIR',constant('ROOTDIR') . '/webbuilder/js');
