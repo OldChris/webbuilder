@@ -9,16 +9,9 @@
 define('ROOTDIR','rootdir');
 // do not change below this line
 define('SCRIPTSDIR',constant('ROOTDIR') . '/webbuilder/scripts');
-define('CSSDIR',constant('ROOTDIR') . '/webbuilder/css');
-define('JSDIR',constant('ROOTDIR') . '/webbuilder/js');
-define('FONTSDIR',constant('ROOTDIR') . '/webbuilder/fonts');
-define('USERCSSDIR',constant('ROOTDIR') . '/user_css');
-define('USERSCRIPTSDIR',constant('ROOTDIR') . '/user_scripts');
-
-define('SCRIPT_TITLE','PHP Webbuilder');
 
 include_once(constant('SCRIPTSDIR') . "/functions.inc.php");
-include_once(constant('SCRIPTSDIR') . "/check.inc.php");
+
 
 if (isset($_GET['menu']))       { $l_menu=$_GET['menu']; }      	else { $l_menu="Home"; }
 if (isset($_GET['submenu']))  	{ $l_submenu=$_GET['submenu']; }	else { $l_submenu=""; }
