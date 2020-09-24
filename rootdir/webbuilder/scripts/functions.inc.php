@@ -991,7 +991,7 @@ function replace8bitHtml($character)
 	switch($ascii_value)
 	{
 		case 128: return '&#128;'; break;
-		case 129: return ' '; break;
+		case 129: return 'Â '; break;
 		case 130: return '&#130;'; break;
 		case 131: return '&#131;'; break;
 		case 132: return '&#132;'; break;
@@ -1003,10 +1003,10 @@ function replace8bitHtml($character)
 		case 138: return '&#138;'; break;
 		case 139: return '&#139;'; break;
 		case 140: return '&#140;'; break;
-		case 141: return ' '; break;
+		case 141: return 'Â '; break;
 		case 142: return '&#142;'; break;
-		case 143: return ' '; break;
-		case 144: return ' '; break;
+		case 143: return 'Â '; break;
+		case 144: return 'Â '; break;
 		case 145: return '&#145;'; break;
 		case 146: return '&#146;'; break;
 		case 147: return '&#147;'; break;
@@ -1019,7 +1019,7 @@ function replace8bitHtml($character)
 		case 154: return '&#154;'; break;
 		case 155: return '&#155;'; break;
 		case 156: return '&#156;'; break;
-		case 157: return ' '; break;
+		case 157: return 'Â '; break;
 		case 158: return '&#158;'; break;
 		case 159: return '&#159;'; break;
 		case 160: return '&#160;'; break;
