@@ -48,6 +48,8 @@ function readDefaults()
 	$Def_App_Bootstrap_local=true;
 	$Def_App_BGColorNavbarTop="#e3f2fd";
 	$Def_App_BGColorNavbarBottom="#e3f2fd";
+	$Def_App_NavbarTop="dark";
+	$Def_App_NavbarBottom="light";
 
 	//
 	$App_Name="";
@@ -61,6 +63,8 @@ function readDefaults()
 	$App_Bootstrap_local="";
 	$App_BGColorNavbarTop="";
 	$App_BGColorNavbarBottom="";
+	$App_NavbarTop="";
+	$App_NavbarBottom="";
 	// 
 	$DefaultErrors="";
 	// locate file
@@ -125,6 +129,12 @@ function readDefaults()
 						case "APP_BGCOLORNAVBARBOTTOM" :
 							$App_BGColorNavbarBottom=$value;
 							break;
+						case "APP_NAVBARTOP" :
+							$App_NavbarTop=$value;
+							break;
+						case "APP_NAVBARBOTTOM" :
+							$App_NavbarBottom=$value;
+							break;
 
 
 					}
@@ -185,6 +195,16 @@ function readDefaults()
 			{
 				$App_BGColorNavbarBottom=$Def_App_BGColorNavbarBottom;
 				$DefaultErrors.='no value present for App_BGColorNavbarBottom in ' . $filename . ', ';
+			}
+			if ($App_NavbarTop=="")
+			{
+				$App_NavbarTop=$Def_App_NavbarTop;
+				$DefaultErrors.='no value present for App_NavbarTop in ' . $filename . ', ';
+			}
+			if ($App_NavbarBottom=="")
+			{
+				$App_NavbarBottom=$Def_App_NavbarBottom;
+				$DefaultErrors.='no value present for App_NavbarBottom in ' . $filename . ', ';
 			}
 		} else
 		{
@@ -248,7 +268,15 @@ function showMenu($menu_level1,$menu_level2="")
 		$menucontext_level1=$App_Home;
 	}
 	// Now build the menu bar
-	echo '<nav class="navbar navbar-expand-md navbar-light" style="background-color:' . $App_BGColorNavbarTop . ';">' . PHP_EOL;
+	if ($App_NavbarTop == "dark") 
+        {
+             $navbar="navbar-dark";
+        }
+        else
+        {
+             $navbar="navbar-light";
+        }
+	echo '<nav class="navbar navbar-expand-md ' . $navbar . '" style="background-color:' . $App_BGColorNavbarTop . '">' . PHP_EOL;
     echo '  <a class="navbar-brand" href="index.php">' . PHP_EOL;
 	echo '    <img src="'. constant('ROOTDIR') . '/images/' . $App_Logo . '" height="50" loading="lazy">' .PHP_EOL;
 	echo '  </a>' . PHP_EOL;
@@ -1303,7 +1331,15 @@ function showFooter()
 	$contact='<a href="index.php?contact=1">Contact</a>';
 	$copyrightscripting='(' . constant('SCRIPT_TITLE') . ' by Chris van Gorp)';
 	$spacing='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-	echo '<nav class="navbar fixed-bottom navbar-solid navbar-expand-md navbar-light"  style="background-color:' . $App_BGColorNavbarBottom . ';">' . PHP_EOL;
+	if ($App_NavbarBottom == "dark") 
+        {
+             $navbar="navbar-dark";
+        }
+        else
+        {
+             $navbar="navbar-light";
+        }
+	echo '<nav class="navbar fixed-bottom navbar-solid navbar-expand-md ' . $navbar . '"  style="background-color:' . $App_BGColorNavbarBottom . ';">' . PHP_EOL;
     echo '  <a class="navbar-brand" href="#TopOfPage">' . $App_Name . ' : <small class="text-muted">' . $App_Tagline . '</small></a>' . PHP_EOL;
  	echo '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myFooterNavbar" aria-controls="myFooterNavbar" aria-expanded="false" aria-label="Toggle navigation">' .PHP_EOL;
     echo '<span class="navbar-toggler-icon"></span>' . PHP_EOL;

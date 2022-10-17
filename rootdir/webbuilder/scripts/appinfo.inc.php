@@ -10,4 +10,6 @@ global $App_Home;
 global $App_Bootstrap_local;
 global $App_BGColorNavbarTop;
 global $App_BGColorNavbarBottom;
+global $App_NavbarTop;
+global $App_NavbarBottom;
 ?>

@@ -10,3 +10,5 @@ App_Home=Home
 App_Bootstrap_local=True
 App_BGColorNavbarTop=Aquamarine
 App_BGColorNavbarBottom=LightBlue
+App_NavbarTop=dark
+App_NavbarBottom=light
