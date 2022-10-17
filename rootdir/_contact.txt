@@ -1,9 +1,0 @@
-Contact information
-.Email
-john.doe@company.com
-
-.Phone
-+31 1234567890
-
-.Twitter
-@mycompany
