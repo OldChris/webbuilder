@@ -1,9 +1,0 @@
-My downloads 
-
-.about the downloads
-Here are some downloads listed
-
-.List of downloads
-<!--INLINE>showDownloadsFolder</INLINE-->
-
-end of list
