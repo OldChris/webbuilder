@@ -1,0 +1,14 @@
+App_Name=WebBuilder
+App_Tagline=easy, responive websites
+App_Version=V1.0
+App_Icon=favicon.png
+App_Logo=example_logo_header.png
+App_Copyright=(c) 2017-2020 
+App_Description=PHP WebBuilder Demo
+App_Keywords=PHP GitHub Build a website
+App_Home=Home
+App_Bootstrap_local=True
+App_BGColorNavbarTop=Aquamarine
+App_BGColorNavbarBottom=LightBlue
+App_NavbarTop=dark
+App_NavbarBottom=light
