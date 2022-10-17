@@ -6,7 +6,7 @@ A set of PHP scripts that generates a responsive website using Bootstrap 4
 WebBuilder builds a responsive website based on a set of text files (notepad)
 that the user can easily update.
 
-An example webiste can be found at https://webbuilder-bs4.pa7rhm.nl/index.php
+An example website can be found at https://webbuilder-bs4.pa7rhm.nl/index.php
 
 [Screen shot](docs/overview_1.png)
 
